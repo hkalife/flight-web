@@ -1,6 +1,6 @@
 package br.hk.ws;
 
-import br.hk.flightweb.Aviao;
+import entity.Aviao;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;

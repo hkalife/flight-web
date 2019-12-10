@@ -1,9 +1,4 @@
-br\hk\flightweb\Tripulante_.class
-br\hk\flightweb\Aviao.class
-main\Principal.class
-br\hk\flightweb\Voo.class
 br\hk\ws\VooService.class
 br\hk\ws\AviaoService.class
-br\hk\flightweb\Tripulante.class
-br\hk\flightweb\Aviao_.class
+main\Principal.class
 br\hk\ws\TripulanteService.class
