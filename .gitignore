@@ -3,3 +3,6 @@
 /flight/dist/
 /flight-web-jpa/target/
 /flight-entity/flight-entity/target/
+/flight-maven/target/
+/WebServicesTest/nbproject/private/
+/flight-backend/target/
