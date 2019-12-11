@@ -1,0 +1,176 @@
+{
+	"info": {
+		"_postman_id": "a7a6ad09-0396-4ab8-8939-b35c8b92db34",
+		"name": "CRUD Voo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1 - voo CREATE",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n    {\r\n        \"destino\": \"rio de janeiro\",\r\n        \"origem\": \"porto alegre\",\r\n        \"tripulanteCollection\": [],\r\n        \"tripulanteCollection1\": [],\r\n        \"aviaoId\": {\r\n            \"id\": 2\r\n        }\r\n    }\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/flight-backend/webresources/voo/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"flight-backend",
+						"webresources",
+						"voo",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2 - voo READ",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/flight-backend/webresources/voo/find/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"flight-backend",
+						"webresources",
+						"voo",
+						"find",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3 - voo UPDATE",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 2,\r\n    \"destino\": \"rio de janeiro\",\r\n    \"origem\": \"curitiba\",\r\n    \"tripulanteCollection\": [],\r\n    \"tripulanteCollection1\": [],\r\n    \"aviaoId\": {\r\n        \"id\": 2,\r\n        \"fabricante\": \"douglas dc-3\",\r\n        \"prefixo\": \"whk-027\",\r\n        \"vooCollection\": []\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/flight-backend/webresources/voo/edit/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"flight-backend",
+						"webresources",
+						"voo",
+						"edit",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4 - voo DELETE",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/flight-backend/webresources/voo/remove/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"flight-backend",
+						"webresources",
+						"voo",
+						"remove",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "VOO ALL",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/flight-backend/webresources/voo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"flight-backend",
+						"webresources",
+						"voo"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "67bb0ff0-b63b-4ad4-bc86-52a5b9965eee",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "8f79eb47-f9dc-4310-a928-8bb19fe39065",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
