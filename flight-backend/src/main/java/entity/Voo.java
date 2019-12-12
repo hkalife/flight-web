@@ -59,12 +59,13 @@ public class Voo implements Serializable {
     @JsonManagedReference
     private Collection<Tripulante> tripulanteCollection;*/
     
+    //antigo tripulanteCollection1
     @JoinTable(name = "tripulante_voo", joinColumns = {
         @JoinColumn(name = "Tripulante_id", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "voo_id", referencedColumnName = "id")})
     @ManyToMany
     @JsonManagedReference
-    private Collection<Tripulante> tripulanteCollection1;
+    private Collection<Tripulante> tripulanteCollection;
     
     @JoinColumn(name = "aviao_id", referencedColumnName = "id")
     @ManyToOne
@@ -101,23 +102,23 @@ public class Voo implements Serializable {
         this.origem = origem;
     }
 
-    /*@XmlTransient
+    @XmlTransient
     public Collection<Tripulante> getTripulanteCollection() {
         return tripulanteCollection;
     }
 
     public void setTripulanteCollection(Collection<Tripulante> tripulanteCollection) {
         this.tripulanteCollection = tripulanteCollection;
-    }*/
+    }
 
-    @XmlTransient
+    /*@XmlTransient
     public Collection<Tripulante> getTripulanteCollection1() {
         return tripulanteCollection1;
     }
 
     public void setTripulanteCollection1(Collection<Tripulante> tripulanteCollection1) {
         this.tripulanteCollection1 = tripulanteCollection1;
-    }
+    }*/
 
     public Aviao getAviaoId() {
         return aviaoId;
