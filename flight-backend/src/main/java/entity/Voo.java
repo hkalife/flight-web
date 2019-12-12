@@ -5,6 +5,7 @@
  */
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -39,24 +40,32 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Voo implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
+    
     @Size(max = 255)
     @Column(name = "destino")
     private String destino;
+    
     @Size(max = 255)
     @Column(name = "origem")
     private String origem;
-    @ManyToMany(mappedBy = "vooCollection")
-    private Collection<Tripulante> tripulanteCollection;
-    @JoinTable(name = "voo_tripulante", joinColumns = {
-        @JoinColumn(name = "Voo_id", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "tripulante_id", referencedColumnName = "id")})
+    
+    /*@ManyToMany(mappedBy = "vooCollection")
+    @JsonManagedReference
+    private Collection<Tripulante> tripulanteCollection;*/
+    
+    @JoinTable(name = "tripulante_voo", joinColumns = {
+        @JoinColumn(name = "Tripulante_id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "voo_id", referencedColumnName = "id")})
     @ManyToMany
+    @JsonManagedReference
     private Collection<Tripulante> tripulanteCollection1;
+    
     @JoinColumn(name = "aviao_id", referencedColumnName = "id")
     @ManyToOne
     private Aviao aviaoId;
@@ -92,14 +101,14 @@ public class Voo implements Serializable {
         this.origem = origem;
     }
 
-    @XmlTransient
+    /*@XmlTransient
     public Collection<Tripulante> getTripulanteCollection() {
         return tripulanteCollection;
     }
 
     public void setTripulanteCollection(Collection<Tripulante> tripulanteCollection) {
         this.tripulanteCollection = tripulanteCollection;
-    }
+    }*/
 
     @XmlTransient
     public Collection<Tripulante> getTripulanteCollection1() {

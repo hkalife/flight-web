@@ -36,19 +36,23 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Aviao implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
+    
     @Size(max = 255)
     @Column(name = "fabricante")
     private String fabricante;
+    
     @Size(max = 255)
     @Column(name = "prefixo")
     private String prefixo;
-    @OneToMany(mappedBy = "aviaoId")
-    private Collection<Voo> vooCollection;
+    
+    //@OneToMany(mappedBy = "aviaoId")
+    //private Collection<Voo> vooCollection;
 
     public Aviao() {
     }
@@ -81,14 +85,14 @@ public class Aviao implements Serializable {
         this.prefixo = prefixo;
     }
 
-    @XmlTransient
+    /*@XmlTransient
     public Collection<Voo> getVooCollection() {
         return vooCollection;
     }
 
     public void setVooCollection(Collection<Voo> vooCollection) {
         this.vooCollection = vooCollection;
-    }
+    }*/
 
     @Override
     public int hashCode() {

@@ -5,6 +5,7 @@
  */
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -43,20 +44,26 @@ public class Tripulante implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
+    
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="E-mail inválido")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 255)
     @Column(name = "email")
     private String email;
+    
     @Size(max = 255)
     @Column(name = "nome")
     private String nome;
+    
     @JoinTable(name = "tripulante_voo", joinColumns = {
         @JoinColumn(name = "Tripulante_id", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "voo_id", referencedColumnName = "id")})
     @ManyToMany
+    @JsonManagedReference
     private Collection<Voo> vooCollection;
-    @ManyToMany(mappedBy = "tripulanteCollection1")
-    private Collection<Voo> vooCollection1;
+    
+    /*@ManyToMany(mappedBy = "tripulanteCollection1")
+    @JsonManagedReference
+    private Collection<Voo> vooCollection1;*/
 
     public Tripulante() {
     }
@@ -98,14 +105,14 @@ public class Tripulante implements Serializable {
         this.vooCollection = vooCollection;
     }
 
-    @XmlTransient
+    /*@XmlTransient
     public Collection<Voo> getVooCollection1() {
         return vooCollection1;
     }
 
     public void setVooCollection1(Collection<Voo> vooCollection1) {
         this.vooCollection1 = vooCollection1;
-    }
+    }*/
 
     @Override
     public int hashCode() {
