@@ -162,6 +162,26 @@
           <h2 id="avisoErro" v-if="algoErrado">Houve algo de errado. Reveja o ID digitado.</h2>
         </div>
 
+        <div v-if="nomeEntidadeTela === 'Voos'" id="readVoos">
+          <p>Digite os campos abaixo para edição</p>
+          <div>
+            <input type="text" placeholder="Id para edição" v-model="idVooEdicao">
+          </div>
+          <div style="padding-top: 1%;">
+            <input type="text" placeholder="Destino" v-model="destinoVooEdicao">
+          </div>
+          <div style="padding-top: 1%;">
+            <input type="text" placeholder="Origem" v-model="origemVooEdicao">
+          </div>
+          <div style="padding-top: 1%;">
+            <input type="text" placeholder="Id Avião" v-model="aviaoIdVooEdicao">
+          </div>
+          <div style="padding-top: 2%;">
+            <button id="botaoEntidade" type="button" class="col-sm-12 btn btn-outline-light" v-on:click="updateVoo()">Editar</button>
+          </div>
+          <h2 id="avisoErro" v-if="algoErrado">Houve algo de errado. Reveja o ID digitado.</h2>
+        </div>
+
       </div>
 
       <!--OK-->
@@ -251,7 +271,11 @@ export default {
       prefixoEdicao: '',
       idTripulanteEdicao: '',
       emailTripulanteEdicao: '',
-      nomeTripulanteEdicao: ''
+      nomeTripulanteEdicao: '',
+      idVooEdicao: '',
+      destinoVooEdicao: '',
+      origemVooEdicao: '',
+      aviaoIdVooEdicao: ''
     }
   },
   methods: {
@@ -351,7 +375,6 @@ export default {
       }
       this.anterior = this.idParaBuscar
     },
-
     async updateAviao () {
       var aviaoParaEditar = new Object();
       aviaoParaEditar.id = this.idAeronaveEdicao
@@ -368,7 +391,15 @@ export default {
       const api = new TripulanteApi()
       await api.editar( tripulanteParaEditar )
     },
-
+    async updateVoo () {
+      var vooParaEditar = new Object();
+      vooParaEditar.id = this.idVooEdicao
+      vooParaEditar.destino = this.destinoVooEdicao
+      vooParaEditar.origem = this.origemVooEdicao
+      vooParaEditar.aviaoId = parseInt(this.aviaoIdVooEdicao)
+      const api = new VooApi()
+      await api.editar( vooParaEditar )
+    },
     async deleteAviao () {
       var checaAviao = this.readAviao();
       if (checaAviao !== undefined) {

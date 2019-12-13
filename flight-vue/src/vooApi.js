@@ -24,7 +24,6 @@ export default class VooApi {
     }
   
     //READ
-
     async buscar( id ) {
       let urlVoo = `${ this.url }/find/${ id }`
       
@@ -41,6 +40,22 @@ export default class VooApi {
     }    
 
     //UPDATE
+    async editar(voo) {
+        let urlVoo = `${ this.url }/edit/${ voo.id }`     
+          return new Promise( resolve => {
+              fetch(urlVoo, {
+                  "method": "PUT",
+                  "body": JSON.stringify(voo),
+                  "headers": {
+                    'Content-Type': 'application/json'
+                  }
+              })
+              .then( j => j.json() )
+              .then( a => {
+                  resolve(a)
+              })
+          })
+      }
 
     //DELETE
 
