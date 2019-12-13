@@ -12,15 +12,20 @@
       </div>
     </div>
 
-    <div v-if="menuAviao" id="menuAviao">
-      <h1 id="titulo">Aviões</h1>
-      <p id="subtitulo">Opções</p>
+    <div v-if="menuEntidade" id="menuAviao">
+      <img id="airportLogo" src="../assets/airport.png">
+      <h1 id="titulo">{{ nomeEntidadeTela }}</h1>
+      <p id="subtitulo">Selecione a opção desejada</p>
       <div id="linhaBotoes">
-        <button id="botaoEntidade" type="button" class="col-sm-12 btn btn-outline-light" v-on:click="voltarMenuPrincipal()">Voltar</button>
+        <button id="botaoVoltar" type="button" class="col-sm-12 btn btn-outline-light" v-on:click="voltarMenuPrincipal()">Voltar</button>
+        <button id="botaoEntidade" type="button" class="col-sm-12 btn btn-outline-light" v-on:click="teste()">Criar Novo</button>
+        <button id="botaoEntidade" type="button" class="col-sm-12 btn btn-outline-light" v-on:click="teste()">Consultar</button>
+        <button id="botaoEntidade" type="button" class="col-sm-12 btn btn-outline-light" v-on:click="teste()">Editar</button>
+        <button id="botaoEntidade" type="button" class="col-sm-12 btn btn-outline-light" v-on:click="teste()">Remover</button>
       </div>
     </div>
 
-    <div v-if="menuTripulantes" id="menuTripulantes">
+    <!--<div v-if="menuTripulantes" id="menuTripulantes">
       <h1 id="titulo">Tripulantes</h1>
       <p id="subtitulo">Opções</p>
       <div id="linhaBotoes">
@@ -34,7 +39,7 @@
       <div id="linhaBotoes">
         <button id="botaoEntidade" type="button" class="col-sm-12 btn btn-outline-light" v-on:click="voltarMenuPrincipal()">Voltar</button>
       </div>
-    </div>
+    </div>-->
     
     <!--<div id="secaoRequisicao">
       <p>Digite o código do avião: </p>
@@ -69,9 +74,11 @@ export default {
       requisicaoOk: false,
       algoErrado: false,
       menuPrincipal: true,
-      menuAviao: false,
-      menuTripulantes: false,
-      menuVoos: false
+      //menuAviao: false,
+      //menuTripulantes: false,
+      //menuVoos: false,
+      menuEntidade: false,
+      nomeEntidadeTela: ''
     }
   },
   methods: {
@@ -101,27 +108,23 @@ export default {
     },
     voltarMenuPrincipal() {
       this.menuPrincipal = true
-      this.menuAviao = false
-      this.menuTripulantes = false
-      this.menuVoos = false
+      this.nomeEntidadeTela = 'Flight Web'
+      this.menuEntidade = false
     },
     paginaAvioes () {
       this.menuPrincipal = false
-      this.menuAviao = true
-      this.menuTripulantes = false
-      this.menuVoos = false
+      this.nomeEntidadeTela = 'Aviões'
+      this.menuEntidade = true
     },
     paginaTripulantes () {
       this.menuPrincipal = false
-      this.menuAviao = false
-      this.menuTripulantes = true
-      this.menuVoos = false
+      this.nomeEntidadeTela = 'Tripulantes'
+      this.menuEntidade = true
     },
     paginaVoos () {
       this.menuPrincipal = false
-      this.menuAviao = false
-      this.menuTripulantes = false
-      this.menuVoos = true
+      this.nomeEntidadeTela = 'Voos'
+      this.menuEntidade = true
     }
   }
 }
@@ -148,9 +151,17 @@ a {
 }
 #botaoEntidade {
   width: 10%;
-  margin-right: 10%;
-  margin-left: 10%;
+  margin-right: 5%;
+  margin-left: 5%;
   background-color: #026F58;
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+#botaoVoltar {
+  width: 10%;
+  margin-right: 5%;
+  margin-left: 5%;
+  background-color: #ff0000;
   padding-right: 1rem;
   padding-left: 1rem;
 }
