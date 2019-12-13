@@ -18,10 +18,34 @@
       <p id="subtitulo">Selecione a opção desejada</p>
       <div id="linhaBotoes">
         <button id="botaoVoltar" type="button" class="col-sm-12 btn btn-outline-light" v-on:click="voltarMenuPrincipal()">Voltar</button>
-        <button id="botaoEntidade" type="button" class="col-sm-12 btn btn-outline-light" v-on:click="teste()">Criar Novo</button>
-        <button id="botaoEntidade" type="button" class="col-sm-12 btn btn-outline-light" v-on:click="teste()">Consultar</button>
-        <button id="botaoEntidade" type="button" class="col-sm-12 btn btn-outline-light" v-on:click="teste()">Editar</button>
-        <button id="botaoEntidade" type="button" class="col-sm-12 btn btn-outline-light" v-on:click="teste()">Remover</button>
+        <button id="botaoEntidade" type="button" class="col-sm-12 btn btn-outline-light" v-on:click="irTelaOperacao('C')">Criar Novo</button>
+        <button id="botaoEntidade" type="button" class="col-sm-12 btn btn-outline-light" v-on:click="irTelaOperacao('R')">Consultar</button>
+        <button id="botaoEntidade" type="button" class="col-sm-12 btn btn-outline-light" v-on:click="irTelaOperacao('U')">Editar</button>
+        <button id="botaoEntidade" type="button" class="col-sm-12 btn btn-outline-light" v-on:click="irTelaOperacao('D')">Remover</button>
+      </div>
+    </div>
+
+    <div v-if="menuOperacao" id="menuOperacao">
+      <h1 id="titulo">{{ nomeOperacaoCrud }} {{ nomeEntidadeTela }}</h1>
+
+      <div v-if="utilizacaoCreate">
+        <p>Utilização Create.</p>
+      </div>
+
+      <div v-if="utilizacaoRead">
+        <p>Utilização Read.</p>
+      </div>
+
+      <div v-if="utilizacaoUpdate">
+        <p>Utilização Update.</p>
+      </div>
+
+      <div v-if="utilizacaoDelete">
+        <p>Utilização Delete.</p>
+      </div>
+
+      <div id="linhaBotoes">
+        <button id="botaoVoltar" type="button" class="col-sm-12 btn btn-outline-light" v-on:click="voltarMenuPrincipal()">Voltar</button>
       </div>
     </div>
 
@@ -74,11 +98,15 @@ export default {
       requisicaoOk: false,
       algoErrado: false,
       menuPrincipal: true,
-      //menuAviao: false,
-      //menuTripulantes: false,
-      //menuVoos: false,
       menuEntidade: false,
-      nomeEntidadeTela: ''
+      menuOperacao: false,
+      nomeEntidadeTela: '',
+      nomeOperacaoCrud: '',
+      operacao: '',
+      utilizacaoCreate: false,
+      utilizacaoRead: false,
+      utilizacaoUpdate: false,
+      utilizacaoDelete: false
     }
   },
   methods: {
@@ -108,8 +136,10 @@ export default {
     },
     voltarMenuPrincipal() {
       this.menuPrincipal = true
-      this.nomeEntidadeTela = 'Flight Web'
       this.menuEntidade = false
+      this.menuOperacao = false
+
+      this.nomeEntidadeTela = 'Flight Web'
     },
     paginaAvioes () {
       this.menuPrincipal = false
@@ -125,6 +155,44 @@ export default {
       this.menuPrincipal = false
       this.nomeEntidadeTela = 'Voos'
       this.menuEntidade = true
+    },
+    irTelaOperacao (operacao) {
+      this.menuPrincipal = false
+      this.menuEntidade = false
+      this.menuOperacao = true
+
+      if (operacao === 'C') {
+        this.nomeOperacaoCrud = 'Create'
+        this.utilizacaoCreate = true
+
+        this.utilizacaoRead = false
+        this.utilizacaoUpdate = false
+        this.utilizacaoDelete = false
+      }
+      if (operacao === 'R') {
+        this.nomeOperacaoCrud = 'Read'
+        this.utilizacaoRead = true
+
+        this.utilizacaoCreate = false
+        this.utilizacaoUpdate = false
+        this.utilizacaoDelete = false
+      }
+      if (operacao === 'U') {
+        this.nomeOperacaoCrud = 'Update'
+        this.utilizacaoUpdate = true
+
+        this.utilizacaoRead = false
+        this.utilizacaoCreate = false
+        this.utilizacaoDelete = false
+      }
+      if (operacao === 'D') {
+        this.nomeOperacaoCrud = 'Delete'
+        this.utilizacaoDelete = true
+
+        this.utilizacaoRead = false
+        this.utilizacaoUpdate = false
+        this.utilizacaoCreate = false
+      }
     }
   }
 }
