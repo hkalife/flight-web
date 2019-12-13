@@ -46,6 +46,22 @@ export default class AviaoApi {
     }    
 
     //UPDATE
+    async editar(aviao) {
+      let urlAviao = `${ this.url }/edit/${ aviao.id }`     
+        return new Promise( resolve => {
+            fetch(urlAviao, {
+                "method": "PUT",
+                "body": JSON.stringify(aviao),
+                "headers": {
+                  'Content-Type': 'application/json'
+                }
+            })
+            .then( j => j.json() )
+            .then( a => {
+                resolve(a)
+            })
+        })
+    }
 
     //DELETE
     async remover( id ) {

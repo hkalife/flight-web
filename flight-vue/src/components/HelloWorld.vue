@@ -28,6 +28,7 @@
     <div v-if="menuOperacao" id="menuOperacao">
       <h1 id="titulo">{{ nomeOperacaoCrud }} {{ nomeEntidadeTela }}</h1>
 
+      <!--OK-->
       <div v-if="utilizacaoCreate">
 
         <div v-if="nomeEntidadeTela === 'Aviões'" id="readAviao">
@@ -126,9 +127,27 @@
       </div>
 
       <div v-if="utilizacaoUpdate">
-        <p>Utilização Update.</p>
+
+        <div v-if="nomeEntidadeTela === 'Aviões'" id="readAviao">
+          <p>Digite os campos abaixo para edição</p>
+          <div>
+            <input type="text" placeholder="Id para edição" v-model="idAeronaveEdicao">
+          </div>
+          <div style="padding-top: 1%;">
+            <input type="text" placeholder="Fabricante" v-model="fabricanteAeronaveEdicao">
+          </div>
+          <div style="padding-top: 1%;">
+            <input type="text" placeholder="Prefixo" v-model="prefixoEdicao">
+          </div>
+          <div style="padding-top: 2%;">
+            <button id="botaoEntidade" type="button" class="col-sm-12 btn btn-outline-light" v-on:click="updateAviao()">Editar</button>
+          </div>
+          <h2 id="avisoErro" v-if="algoErrado">Houve algo de errado. Reveja o ID digitado.</h2>
+        </div>
+
       </div>
 
+      <!--OK-->
       <div v-if="utilizacaoDelete">
 
         <div v-if="nomeEntidadeTela === 'Aviões'" id="readAviao">
@@ -209,7 +228,10 @@ export default {
       origemCriacaoVoo: '',
       tripulanteCriacaoVoo1: '',
       tripulanteCriacaoVoo2: '',
-      aviaoCriacaoVoo: ''
+      aviaoCriacaoVoo: '',
+      idAeronaveEdicao: '',
+      fabricanteAeronaveEdicao: '',
+      prefixoEdicao: ''
     }
   },
   methods: {
@@ -308,6 +330,15 @@ export default {
         this.avisoAnterior = true
       }
       this.anterior = this.idParaBuscar
+    },
+
+    async updateAviao () {
+      var aviaoParaEditar = new Object();
+      aviaoParaEditar.id = this.idAeronaveEdicao
+      aviaoParaEditar.fabricante = this.fabricanteAeronaveEdicao
+      aviaoParaEditar.prefixo = this.prefixoEdicao
+      const api = new AviaoApi()
+      await api.editar( aviaoParaEditar )
     },
 
     async deleteAviao () {
