@@ -27,4 +27,19 @@ export default class VooApi {
     //UPDATE
 
     //DELETE
+
+    async remover( id ) {
+        let urlVoo = `${ this.url }/remove/${ id }`
+        
+        return new Promise( resolve => {
+          fetch(urlVoo, {
+              "method": "DELETE"
+          })
+          .then( j => j.json() )
+          .then( v => {
+              const voo = new Voo(v)
+              resolve(voo)
+          })
+        })
+      }
 }

@@ -32,8 +32,9 @@
         <p>Utilização Create.</p>
       </div>
 
+      <!--OK-->
       <div v-if="utilizacaoRead">
-        
+
         <div v-if="nomeEntidadeTela === 'Aviões'" id="readAviao">
           <p>Digite o código a ser retornado </p>
           <input type="text" placeholder="ex: 1" v-on:blur="readAviao()" v-model="idParaBuscar">
@@ -45,7 +46,7 @@
           </div>
           <h2 id="avisoErro" v-if="algoErrado">Houve algo de errado. Reveja o ID digitado.</h2>
         </div>
-
+        
         <div v-if="nomeEntidadeTela === 'Tripulantes'" id="readTripulante">
           <p>Digite o código a ser retornado </p>
           <input type="text" placeholder="ex: 1" v-on:blur="readTripulante()" v-model="idParaBuscar">
@@ -58,7 +59,6 @@
           </div>
           <h2 id="avisoErro" v-if="algoErrado">Houve algo de errado. Reveja o ID digitado.</h2>
         </div>
-
         <div v-if="nomeEntidadeTela === 'Voos'" id="readVoo">
           <p>Digite o código a ser retornado </p>
           <input type="text" placeholder="ex: 1" v-on:blur="readVoo()" v-model="idParaBuscar">
@@ -72,7 +72,6 @@
           </div>
           <h2 id="avisoErro" v-if="algoErrado">Houve algo de errado. Reveja o ID digitado.</h2>
         </div>
-
       </div>
 
       <div v-if="utilizacaoUpdate">
@@ -80,7 +79,28 @@
       </div>
 
       <div v-if="utilizacaoDelete">
-        <p>Utilização Delete.</p>
+
+        <div v-if="nomeEntidadeTela === 'Aviões'" id="readAviao">
+          <p>Digite o código para ser deletado</p>
+          <input type="text" placeholder="ex: 1" v-on:blur="deleteAviao()" v-model="idParaBuscar">
+          <h2 v-if="deletouAviao">Avião deletado com sucesso.</h2>
+          <h2 v-if="deletouAviao === false || deletouAviao !== ''">Erro na requisição. Verifique ID.</h2>
+        </div>
+
+        <div v-if="nomeEntidadeTela === 'Voos'" id="readVoos">
+          <p>Digite o código para ser deletado</p>
+          <input type="text" placeholder="ex: 1" v-on:blur="deleteVoo()" v-model="idParaBuscar">
+          <h2 v-if="deletouAviao">Voo deletado com sucesso.</h2>
+          <h2 v-if="deletouAviao === false || deletouAviao !== ''">Erro na requisição. Verifique ID.</h2>
+        </div>
+
+        <div v-if="nomeEntidadeTela === 'Tripulantes'" id="readTripulantes">
+          <p>Digite o código para ser deletado</p>
+          <input type="text" placeholder="ex: 1" v-on:blur="deleteTripulante()" v-model="idParaBuscar">
+          <h2 v-if="deletouAviao">Tripulante deletado com sucesso.</h2>
+          <h2 v-if="deletouAviao === false || deletouAviao !== ''">Erro na requisição. Verifique ID.</h2>
+        </div>
+
       </div>
 
       <div id="linhaBotoes">
@@ -128,7 +148,8 @@ export default {
       destino: '',
       origem: '',
       tripulantes: {},
-      aviao: {}
+      aviao: {},
+      deletouAviao: ''
     }
   },
   methods: {
@@ -204,6 +225,24 @@ export default {
         this.avisoAnterior = true
       }
       this.anterior = this.idParaBuscar
+    },
+    async deleteAviao () {
+      var checaAviao = this.readAviao();
+      if (checaAviao !== undefined) {
+        const api = new AviaoApi()
+        await api.remover(this.idParaBuscar)
+        this.deletouAviao = true
+      } else {
+        this.deletouAviao = false
+      }
+    },
+    async deleteVoo () {
+      const api = new VooApi()
+      await api.remover(this.idParaBuscar)
+    },
+    async deleteTripulante () {
+      const api = new TripulanteApi()
+      await api.remover(this.idParaBuscar)
     },
     voltarMenuPrincipal() {
       this.menuPrincipal = true

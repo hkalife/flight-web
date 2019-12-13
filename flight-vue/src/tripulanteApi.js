@@ -8,7 +8,6 @@ export default class TripulanteApi {
     //CREATE
   
     //READ
-
     async buscar( id ) {
       let urlTripulante = `${ this.url }/find/${ id }`
       
@@ -24,9 +23,21 @@ export default class TripulanteApi {
       })
     }
 
-    
-
     //UPDATE
 
     //DELETE
+    async remover( id ) {
+        let urlTripulante = `${ this.url }/remove/${ id }`
+        
+        return new Promise( resolve => {
+          fetch(urlTripulante, {
+              "method": "DELETE"
+          })
+          .then( j => j.json() )
+          .then( t => {
+              const tripulante = new Tripulante(t)
+              resolve(tripulante)
+          })
+        })
+      }
 }

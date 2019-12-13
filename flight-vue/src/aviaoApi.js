@@ -8,20 +8,6 @@ export default class AviaoApi {
     //CREATE
   
     //READ
-
-    async buscarGeral () {
-        return new Promise( resolve => {
-            fetch("http://localhost:8080/flight-backend/webresources/aviao/findAll", {
-                "method": "GET"
-            })
-            .then( j => j.json() )
-            .then( a => {
-                var aviao = [new Aviao(a)]
-                resolve(aviao)
-            })
-          })
-    }
-
     async buscar( id ) {
       let urlAviao = `${ this.url }/find/${ id }`
       
@@ -35,11 +21,23 @@ export default class AviaoApi {
             resolve(aviao)
         })
       })
-    }
-
-    
+    }    
 
     //UPDATE
 
     //DELETE
+    async remover( id ) {
+        let urlAviao = `${ this.url }/remove/${ id }`
+        
+        return new Promise( resolve => {
+          fetch(urlAviao, {
+              "method": "DELETE"
+          })
+          .then( j => j.json() )
+          .then( a => {
+              const aviao = new Aviao(a)
+              resolve(aviao)
+          })
+        })
+      }
 }
