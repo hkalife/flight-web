@@ -64,7 +64,6 @@ public class Voo implements Serializable {
         @JoinColumn(name = "Tripulante_id", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "voo_id", referencedColumnName = "id")})
     @ManyToMany
-    @JsonManagedReference
     private Collection<Tripulante> tripulanteCollection;
     
     @JoinColumn(name = "aviao_id", referencedColumnName = "id")
