@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Tripulante.findById", query = "SELECT t FROM Tripulante t WHERE t.id = :id")
     , @NamedQuery(name = "Tripulante.findByEmail", query = "SELECT t FROM Tripulante t WHERE t.email = :email")
     , @NamedQuery(name = "Tripulante.findByNome", query = "SELECT t FROM Tripulante t WHERE t.nome = :nome")})
-//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "vooCollection"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "vooCollection"})
 public class Tripulante implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -62,8 +62,8 @@ public class Tripulante implements Serializable {
         @JoinColumn(name = "Tripulante_id", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "voo_id", referencedColumnName = "id")})*/
     @ManyToMany	
-    @JsonBackReference
-    private Set<Voo> vooCollection;
+    //@JsonBackReference
+    private Collection<Voo> vooCollection;
     
     /*@ManyToMany(mappedBy = "tripulanteCollection1")
     @JsonManagedReference
@@ -105,7 +105,7 @@ public class Tripulante implements Serializable {
         return vooCollection;
     }
 
-    public void setVooCollection(Set<Voo> vooCollection) {
+    public void setVooCollection(Collection<Voo> vooCollection) {
         this.vooCollection = vooCollection;
     }
 

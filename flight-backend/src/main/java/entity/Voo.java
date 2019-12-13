@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -68,9 +67,9 @@ public class Voo implements Serializable {
     @JoinTable(name = "tripulante_voo", joinColumns = {
         @JoinColumn(name = "Tripulante_id", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "voo_id", referencedColumnName = "id")})
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    @JsonManagedReference
-    private Set<Tripulante> tripulanteCollection;
+    @ManyToMany
+    //@JsonManagedReference
+    private Collection<Tripulante> tripulanteCollection;
     
     @JoinColumn(name = "aviao_id", referencedColumnName = "id")
     @ManyToOne
@@ -112,7 +111,7 @@ public class Voo implements Serializable {
         return tripulanteCollection;
     }
 
-    public void setTripulanteCollection(Set<Tripulante> tripulanteCollection) {
+    public void setTripulanteCollection(Collection<Tripulante> tripulanteCollection) {
         this.tripulanteCollection = tripulanteCollection;
     }
 

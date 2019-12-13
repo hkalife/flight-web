@@ -41,11 +41,19 @@
           <div style="padding-top: 2%;">
             <button id="botaoEntidade" type="button" class="col-sm-12 btn btn-outline-light" v-on:click="createAviao()">Criar</button>
           </div>
-          <div id="resultadoAviao" style="padding-top: 2%;">
-            <div v-if="requisicaoOk" id="secaoResultado">
-              <p>Fabricante: {{ fabricante }}</p>
-              <p>Prefixo: {{ prefixo }}</p>
-            </div>
+          <h2 id="avisoErro" v-if="algoErrado">Houve algo de errado. Reveja o ID digitado.</h2>
+        </div>
+
+        <div v-if="nomeEntidadeTela === 'Tripulantes'" id="readTripulantes">
+          <p>Digite os campos abaixo para criação</p>
+          <div>
+            <input type="text" placeholder="E-mail" v-model="emailCriacaoTripulante">
+          </div>
+          <div style="padding-top: 1%;">
+            <input type="text" placeholder="Nome" v-model="nomeCriacaoTripulante">
+          </div>
+          <div style="padding-top: 2%;">
+            <button id="botaoEntidade" type="button" class="col-sm-12 btn btn-outline-light" v-on:click="createTripulante()">Criar</button>
           </div>
           <h2 id="avisoErro" v-if="algoErrado">Houve algo de errado. Reveja o ID digitado.</h2>
         </div>
@@ -171,7 +179,9 @@ export default {
       aviao: {},
       deletouAviao: '',
       fabricanteAeronaveCriacao: '',
-      prefixoCriacao: ''
+      prefixoCriacao: '',
+      emailCriacaoTripulante: '',
+      nomeCriacaoTripulante: '',
     }
   },
   methods: {
@@ -182,7 +192,13 @@ export default {
       const api = new AviaoApi()
       await api.cadastrar( aviaoParaInserir )
     },
-
+    async createTripulante() {
+      var tripulanteParaInserir = new Object();
+      tripulanteParaInserir.email = this.emailCriacaoTripulante
+      tripulanteParaInserir.nome = this.nomeCriacaoTripulante
+      const api = new TripulanteApi()
+      await api.cadastrar( tripulanteParaInserir )
+    },
     async readAviao() {
       if (this.anterior !== this.idParaBuscar) {
         const api = new AviaoApi()

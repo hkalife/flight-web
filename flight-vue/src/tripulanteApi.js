@@ -6,6 +6,22 @@ export default class TripulanteApi {
     }
 
     //CREATE
+    async cadastrar(tripulante) {
+        let urlTripulante = `${ this.url }/create`        
+          return new Promise( resolve => {
+              fetch(urlTripulante, {
+                  "method": "POST",
+                  "body": JSON.stringify(tripulante),
+                  "headers": {
+                    'Content-Type': 'application/json'
+                  }
+              })
+              .then( j => j.json() )
+              .then( t => {
+                  resolve(t)
+              })
+          })
+    }
   
     //READ
     async buscar( id ) {
