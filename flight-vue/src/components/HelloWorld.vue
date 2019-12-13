@@ -59,6 +59,20 @@
           <h2 id="avisoErro" v-if="algoErrado">Houve algo de errado. Reveja o ID digitado.</h2>
         </div>
 
+        <div v-if="nomeEntidadeTela === 'Voos'" id="readVoo">
+          <p>Digite o código a ser retornado </p>
+          <input type="text" placeholder="ex: 1" v-on:blur="readVoo()" v-model="idParaBuscar">
+          <div id="resultadoVoo" style="padding-top: 2%;">
+            <div v-if="requisicaoOk" id="secaoResultado">
+              <p>Destino: {{ destino }}</p>
+              <p>Origem: {{ origem }}</p>
+              <p>Tripulantes: {{ tripulantes }} </p>
+              <p>Avião: {{ aviao }} </p>
+            </div>
+          </div>
+          <h2 id="avisoErro" v-if="algoErrado">Houve algo de errado. Reveja o ID digitado.</h2>
+        </div>
+
       </div>
 
       <div v-if="utilizacaoUpdate">
@@ -74,40 +88,13 @@
       </div>
     </div>
 
-    <!--<div v-if="menuTripulantes" id="menuTripulantes">
-      <h1 id="titulo">Tripulantes</h1>
-      <p id="subtitulo">Opções</p>
-      <div id="linhaBotoes">
-        <button id="botaoEntidade" type="button" class="col-sm-12 btn btn-outline-light" v-on:click="voltarMenuPrincipal()">Voltar</button>
-      </div>
-    </div>
-
-    <div v-if="menuVoos" id="menuVoos">
-      <h1 id="titulo">Voos</h1>
-      <p id="subtitulo">Opções</p>
-      <div id="linhaBotoes">
-        <button id="botaoEntidade" type="button" class="col-sm-12 btn btn-outline-light" v-on:click="voltarMenuPrincipal()">Voltar</button>
-      </div>
-    </div>-->
-    
-    <!--<div id="secaoRequisicao">
-      <p>Digite o código do avião: </p>
-      <input type="text" placeholder="ex: 1" v-on:blur="buscar()" v-model="idParaBuscar">
-    </div>
-    <div id="resultado">
-      <div v-if="requisicaoOk" id="secaoResultado">
-        <p>Fabricante: {{ fabricante }}</p>
-        <p>Prefixo: {{ prefixo }}</p>
-      </div>
-    </div>
-    <h2 id="avisoErro" v-if="algoErrado">Houve algo de errado. Reveja o ID digitado.</h2>-->
-
   </div>
 </template>
 
 <script>
 import AviaoApi from '../aviaoApi.js';
 import TripulanteApi from '../tripulanteApi.js';
+import VooApi from '../vooApi.js';
 
 export default {
   name: 'HelloWorld',
@@ -136,7 +123,12 @@ export default {
       idTripulante: '',
       nomeTripulante: '',
       emailTripulante: '',
-      voosTripulante: {}
+      voosTripulante: {},
+      idVoo: '',
+      destino: '',
+      origem: '',
+      tripulantes: {},
+      aviao: {}
     }
   },
   methods: {
@@ -172,6 +164,31 @@ export default {
         this.nomeTripulante = response.nome
         this.emailTripulante = response.email
         this.voosTripulante = response.voos
+        if (response !== null || response !== undefined) {
+          if (this.fabricante !== undefined) {
+            this.requisicaoOk = true
+            this.algoErrado = false
+          }
+          else {
+            this.algoErrado = true
+            this.requisicaoOk = false
+          }
+        }
+      }
+      else {
+        this.avisoAnterior = true
+      }
+      this.anterior = this.idParaBuscar
+    },
+    async readVoo () {
+      if (this.anterior !== this.idParaBuscar) {
+        const api = new VooApi()
+        const response = await api.buscar( this.idParaBuscar )
+        this.idVoo = response.id
+        this.destino = response.destino
+        this.origem = response.origem
+        this.tripulantes = response.tripulantes
+        this.aviao = response.aviao
         if (response !== null || response !== undefined) {
           if (this.fabricante !== undefined) {
             this.requisicaoOk = true
