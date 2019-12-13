@@ -5,9 +5,12 @@
  */
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,6 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Tripulante.findById", query = "SELECT t FROM Tripulante t WHERE t.id = :id")
     , @NamedQuery(name = "Tripulante.findByEmail", query = "SELECT t FROM Tripulante t WHERE t.email = :email")
     , @NamedQuery(name = "Tripulante.findByNome", query = "SELECT t FROM Tripulante t WHERE t.nome = :nome")})
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "vooCollection"})
 public class Tripulante implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,11 +58,12 @@ public class Tripulante implements Serializable {
     @Column(name = "nome")
     private String nome;
     
-    @JoinTable(name = "tripulante_voo", joinColumns = {
+    /*@JoinTable(name = "tripulante_voo", joinColumns = {
         @JoinColumn(name = "Tripulante_id", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "voo_id", referencedColumnName = "id")})
-    @ManyToMany
-    private Collection<Voo> vooCollection;
+        @JoinColumn(name = "voo_id", referencedColumnName = "id")})*/
+    @ManyToMany	
+    @JsonBackReference
+    private Set<Voo> vooCollection;
     
     /*@ManyToMany(mappedBy = "tripulanteCollection1")
     @JsonManagedReference
@@ -100,7 +105,7 @@ public class Tripulante implements Serializable {
         return vooCollection;
     }
 
-    public void setVooCollection(Collection<Voo> vooCollection) {
+    public void setVooCollection(Set<Voo> vooCollection) {
         this.vooCollection = vooCollection;
     }
 

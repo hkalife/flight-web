@@ -5,12 +5,16 @@
  */
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,6 +41,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Voo.findById", query = "SELECT v FROM Voo v WHERE v.id = :id")
     , @NamedQuery(name = "Voo.findByDestino", query = "SELECT v FROM Voo v WHERE v.destino = :destino")
     , @NamedQuery(name = "Voo.findByOrigem", query = "SELECT v FROM Voo v WHERE v.origem = :origem")})
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "tripulanteCollection"})
 public class Voo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -63,8 +68,9 @@ public class Voo implements Serializable {
     @JoinTable(name = "tripulante_voo", joinColumns = {
         @JoinColumn(name = "Tripulante_id", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "voo_id", referencedColumnName = "id")})
-    @ManyToMany
-    private Collection<Tripulante> tripulanteCollection;
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private Set<Tripulante> tripulanteCollection;
     
     @JoinColumn(name = "aviao_id", referencedColumnName = "id")
     @ManyToOne
@@ -106,7 +112,7 @@ public class Voo implements Serializable {
         return tripulanteCollection;
     }
 
-    public void setTripulanteCollection(Collection<Tripulante> tripulanteCollection) {
+    public void setTripulanteCollection(Set<Tripulante> tripulanteCollection) {
         this.tripulanteCollection = tripulanteCollection;
     }
 
