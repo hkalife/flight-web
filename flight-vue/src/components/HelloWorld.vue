@@ -145,6 +145,23 @@
           <h2 id="avisoErro" v-if="algoErrado">Houve algo de errado. Reveja o ID digitado.</h2>
         </div>
 
+        <div v-if="nomeEntidadeTela === 'Tripulantes'" id="readTripulantes">
+          <p>Digite os campos abaixo para edição</p>
+          <div>
+            <input type="text" placeholder="Id para edição" v-model="idTripulanteEdicao">
+          </div>
+          <div style="padding-top: 1%;">
+            <input type="text" placeholder="E-mail" v-model="emailTripulanteEdicao">
+          </div>
+          <div style="padding-top: 1%;">
+            <input type="text" placeholder="Nome" v-model="nomeTripulanteEdicao">
+          </div>
+          <div style="padding-top: 2%;">
+            <button id="botaoEntidade" type="button" class="col-sm-12 btn btn-outline-light" v-on:click="updateTripulante()">Editar</button>
+          </div>
+          <h2 id="avisoErro" v-if="algoErrado">Houve algo de errado. Reveja o ID digitado.</h2>
+        </div>
+
       </div>
 
       <!--OK-->
@@ -231,7 +248,10 @@ export default {
       aviaoCriacaoVoo: '',
       idAeronaveEdicao: '',
       fabricanteAeronaveEdicao: '',
-      prefixoEdicao: ''
+      prefixoEdicao: '',
+      idTripulanteEdicao: '',
+      emailTripulanteEdicao: '',
+      nomeTripulanteEdicao: ''
     }
   },
   methods: {
@@ -339,6 +359,14 @@ export default {
       aviaoParaEditar.prefixo = this.prefixoEdicao
       const api = new AviaoApi()
       await api.editar( aviaoParaEditar )
+    },
+    async updateTripulante () {
+      var tripulanteParaEditar = new Object();
+      tripulanteParaEditar.id = this.idTripulanteEdicao
+      tripulanteParaEditar.email = this.emailTripulanteEdicao
+      tripulanteParaEditar.nome = this.nomeTripulanteEdicao
+      const api = new TripulanteApi()
+      await api.editar( tripulanteParaEditar )
     },
 
     async deleteAviao () {

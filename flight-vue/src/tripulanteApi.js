@@ -40,6 +40,22 @@ export default class TripulanteApi {
     }
 
     //UPDATE
+    async editar(tripulante) {
+        let urlTripulante = `${ this.url }/edit/${ tripulante.id }`     
+          return new Promise( resolve => {
+              fetch(urlTripulante, {
+                  "method": "PUT",
+                  "body": JSON.stringify(tripulante),
+                  "headers": {
+                    'Content-Type': 'application/json'
+                  }
+              })
+              .then( j => j.json() )
+              .then( a => {
+                  resolve(a)
+              })
+          })
+      }
 
     //DELETE
     async remover( id ) {
