@@ -33,7 +33,19 @@
       </div>
 
       <div v-if="utilizacaoRead">
-        <p>Utilização Read.</p>
+        
+        <div id="readAviao">
+          <p>Digite o código a ser retornado </p>
+          <input type="text" placeholder="ex: 1" v-on:blur="readAviao()" v-model="idParaBuscar">
+          <div id="resultadoAviao" style="padding-top: 2%;">
+            <div v-if="requisicaoOk" id="secaoResultado">
+              <p>Fabricante: {{ fabricante }}</p>
+              <p>Prefixo: {{ prefixo }}</p>
+            </div>
+          </div>
+          <h2 id="avisoErro" v-if="algoErrado">Houve algo de errado. Reveja o ID digitado.</h2>
+        </div>
+
       </div>
 
       <div v-if="utilizacaoUpdate">
@@ -111,7 +123,7 @@ export default {
   },
   methods: {
 
-    async buscar() {
+    async readAviao() {
       if (this.anterior !== this.idParaBuscar) {
         const api = new AviaoApi()
         const response = await api.buscar( this.idParaBuscar )

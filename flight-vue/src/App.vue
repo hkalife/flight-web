@@ -1,20 +1,16 @@
 <template>
   <div id="app">
-    
     <HelloWorld />
-    <!--<Aviao />-->
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
-//import Aviao from './components/Aviao.vue'
 
 export default {
   name: 'app',
   components: {
     HelloWorld
-    //Aviao
   }
 }
 </script>
