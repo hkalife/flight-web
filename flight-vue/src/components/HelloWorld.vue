@@ -29,7 +29,27 @@
       <h1 id="titulo">{{ nomeOperacaoCrud }} {{ nomeEntidadeTela }}</h1>
 
       <div v-if="utilizacaoCreate">
-        <p>Utilização Create.</p>
+
+        <div v-if="nomeEntidadeTela === 'Aviões'" id="readAviao">
+          <p>Digite os campos abaixo para criação</p>
+          <div>
+            <input type="text" placeholder="Fabricante" v-model="fabricanteAeronaveCriacao">
+          </div>
+          <div style="padding-top: 1%;">
+            <input type="text" placeholder="Prefixo" v-model="prefixoCriacao">
+          </div>
+          <div style="padding-top: 2%;">
+            <button id="botaoEntidade" type="button" class="col-sm-12 btn btn-outline-light" v-on:click="createAviao()">Criar</button>
+          </div>
+          <div id="resultadoAviao" style="padding-top: 2%;">
+            <div v-if="requisicaoOk" id="secaoResultado">
+              <p>Fabricante: {{ fabricante }}</p>
+              <p>Prefixo: {{ prefixo }}</p>
+            </div>
+          </div>
+          <h2 id="avisoErro" v-if="algoErrado">Houve algo de errado. Reveja o ID digitado.</h2>
+        </div>
+
       </div>
 
       <!--OK-->
@@ -149,10 +169,19 @@ export default {
       origem: '',
       tripulantes: {},
       aviao: {},
-      deletouAviao: ''
+      deletouAviao: '',
+      fabricanteAeronaveCriacao: '',
+      prefixoCriacao: ''
     }
   },
   methods: {
+    async createAviao() {
+      var aviaoParaInserir = new Object();
+      aviaoParaInserir.fabricante = this.fabricanteAeronaveCriacao
+      aviaoParaInserir.prefixo = this.prefixoCriacao
+      const api = new AviaoApi()
+      await api.cadastrar( aviaoParaInserir )
+    },
 
     async readAviao() {
       if (this.anterior !== this.idParaBuscar) {
@@ -226,6 +255,7 @@ export default {
       }
       this.anterior = this.idParaBuscar
     },
+
     async deleteAviao () {
       var checaAviao = this.readAviao();
       if (checaAviao !== undefined) {

@@ -6,6 +6,28 @@ export default class AviaoApi {
     }
 
     //CREATE
+    async cadastrar(aviao) {
+      let urlAviao = `${ this.url }/create`
+
+      //var body = '[{"fabricante":"' + aviao.fabricante + '", "prefixo": "' + aviao.prefixo + '"}]'
+      //var obj = JSON.parse(body)
+      
+        return new Promise( resolve => {
+            fetch(urlAviao, {
+                "method": "POST",
+                "body": JSON.stringify(aviao),
+                "headers": {
+                  'Content-Type': 'application/json'
+                  //'Content-Type': 'application/x-www-form-urlencoded',
+                  //'Authorization': 'Basic dGVzdGp3dGNsaWVudGlkOlhZN2ttem9OemwxMDA='
+                }
+            })
+            .then( j => j.json() )
+            .then( a => {
+                resolve(a)
+            })
+        })
+    }
   
     //READ
     async buscar( id ) {
