@@ -58,6 +58,29 @@
           <h2 id="avisoErro" v-if="algoErrado">Houve algo de errado. Reveja o ID digitado.</h2>
         </div>
 
+        <div v-if="nomeEntidadeTela === 'Voos'" id="readVoos">
+          <p>Digite os campos abaixo para criação</p>
+          <div>
+            <input type="text" placeholder="Destino" v-model="destinoCriacaoVoo">
+          </div>
+          <div style="padding-top: 1%;">
+            <input type="text" placeholder="Origem" v-model="origemCriacaoVoo">
+          </div>
+          <div style="padding-top: 1%;">
+            <input type="text" placeholder="Id do Tripulante 1" v-model="tripulanteCriacaoVoo1">
+          </div>
+          <div style="padding-top: 1%;">
+            <input type="text" placeholder="Id do Tripulante 2" v-model="tripulanteCriacaoVoo2">
+          </div>
+          <div style="padding-top: 1%;">
+            <input type="text" placeholder="Id do Avião" v-model="aviaoCriacaoVoo">
+          </div>
+          <div style="padding-top: 2%;">
+            <button id="botaoEntidade" type="button" class="col-sm-12 btn btn-outline-light" v-on:click="createVoo()">Criar</button>
+          </div>
+          <h2 id="avisoErro" v-if="algoErrado">Houve algo de errado. Reveja o ID digitado.</h2>
+        </div>
+
       </div>
 
       <!--OK-->
@@ -182,6 +205,11 @@ export default {
       prefixoCriacao: '',
       emailCriacaoTripulante: '',
       nomeCriacaoTripulante: '',
+      destinoCriacaoVoo: '',
+      origemCriacaoVoo: '',
+      tripulanteCriacaoVoo1: '',
+      tripulanteCriacaoVoo2: '',
+      aviaoCriacaoVoo: ''
     }
   },
   methods: {
@@ -198,6 +226,16 @@ export default {
       tripulanteParaInserir.nome = this.nomeCriacaoTripulante
       const api = new TripulanteApi()
       await api.cadastrar( tripulanteParaInserir )
+    },
+    async createVoo() {
+      var vooParaInserir = new Object();
+      vooParaInserir.destino = this.destinoCriacaoVoo
+      vooParaInserir.origem = this.origemCriacaoVoo
+      vooParaInserir.tripulanteCollection = parseInt(this.tripulanteCriacaoVoo1)
+      vooParaInserir.tripulanteCollection = parseInt(this.tripulanteCriacaoVoo2)
+      vooParaInserir.aviaoId = parseInt(this.aviaoCriacaoVoo)
+      const api = new VooApi()
+      await api.cadastrar( vooParaInserir )
     },
     async readAviao() {
       if (this.anterior !== this.idParaBuscar) {

@@ -40,7 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Voo.findById", query = "SELECT v FROM Voo v WHERE v.id = :id")
     , @NamedQuery(name = "Voo.findByDestino", query = "SELECT v FROM Voo v WHERE v.destino = :destino")
     , @NamedQuery(name = "Voo.findByOrigem", query = "SELECT v FROM Voo v WHERE v.origem = :origem")})
-//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "tripulanteCollection"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "tripulanteCollection"})
 public class Voo implements Serializable {
 
     private static final long serialVersionUID = 1L;

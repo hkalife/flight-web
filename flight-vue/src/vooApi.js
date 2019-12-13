@@ -6,6 +6,22 @@ export default class VooApi {
     }
 
     //CREATE
+    async cadastrar(voo) {
+        let urlVoo = `${ this.url }/create`        
+          return new Promise( resolve => {
+              fetch(urlVoo, {
+                  "method": "POST",
+                  "body": JSON.stringify(voo),
+                  "headers": {
+                    'Content-Type': 'application/json'
+                  }
+              })
+              .then( j => j.json() )
+              .then( t => {
+                  resolve(t)
+              })
+          })
+    }
   
     //READ
 
