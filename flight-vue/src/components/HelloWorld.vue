@@ -34,13 +34,26 @@
 
       <div v-if="utilizacaoRead">
         
-        <div id="readAviao">
+        <div v-if="nomeEntidadeTela === 'Aviões'" id="readAviao">
           <p>Digite o código a ser retornado </p>
           <input type="text" placeholder="ex: 1" v-on:blur="readAviao()" v-model="idParaBuscar">
           <div id="resultadoAviao" style="padding-top: 2%;">
             <div v-if="requisicaoOk" id="secaoResultado">
               <p>Fabricante: {{ fabricante }}</p>
               <p>Prefixo: {{ prefixo }}</p>
+            </div>
+          </div>
+          <h2 id="avisoErro" v-if="algoErrado">Houve algo de errado. Reveja o ID digitado.</h2>
+        </div>
+
+        <div v-if="nomeEntidadeTela === 'Tripulantes'" id="readTripulante">
+          <p>Digite o código a ser retornado </p>
+          <input type="text" placeholder="ex: 1" v-on:blur="readTripulante()" v-model="idParaBuscar">
+          <div id="resultadoTripulante" style="padding-top: 2%;">
+            <div v-if="requisicaoOk" id="secaoResultado">
+              <p>Nome: {{ nomeTripulante }}</p>
+              <p>Email: {{ emailTripulante }}</p>
+              <p>Voos: {{voosTripulante}} </p>
             </div>
           </div>
           <h2 id="avisoErro" v-if="algoErrado">Houve algo de errado. Reveja o ID digitado.</h2>
@@ -94,6 +107,7 @@
 
 <script>
 import AviaoApi from '../aviaoApi.js';
+import TripulanteApi from '../tripulanteApi.js';
 
 export default {
   name: 'HelloWorld',
@@ -118,7 +132,11 @@ export default {
       utilizacaoCreate: false,
       utilizacaoRead: false,
       utilizacaoUpdate: false,
-      utilizacaoDelete: false
+      utilizacaoDelete: false,
+      idTripulante: '',
+      nomeTripulante: '',
+      emailTripulante: '',
+      voosTripulante: {}
     }
   },
   methods: {
@@ -146,12 +164,38 @@ export default {
       }
       this.anterior = this.idParaBuscar
     },
+    async readTripulante() {
+      if (this.anterior !== this.idParaBuscar) {
+        const api = new TripulanteApi()
+        const response = await api.buscar( this.idParaBuscar )
+        this.idTripulante = response.id
+        this.nomeTripulante = response.nome
+        this.emailTripulante = response.email
+        this.voosTripulante = response.voos
+        if (response !== null || response !== undefined) {
+          if (this.fabricante !== undefined) {
+            this.requisicaoOk = true
+            this.algoErrado = false
+          }
+          else {
+            this.algoErrado = true
+            this.requisicaoOk = false
+          }
+        }
+      }
+      else {
+        this.avisoAnterior = true
+      }
+      this.anterior = this.idParaBuscar
+    },
     voltarMenuPrincipal() {
       this.menuPrincipal = true
       this.menuEntidade = false
       this.menuOperacao = false
 
       this.nomeEntidadeTela = 'Flight Web'
+      this.idParaBuscar = ''
+      this.requisicaoOk = false
     },
     paginaAvioes () {
       this.menuPrincipal = false
