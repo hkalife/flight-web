@@ -65,6 +65,7 @@ public class AviaoFacadeREST extends AbstractFacade<Aviao> {
 
     @GET
     @Override
+    @Path("findAll")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Aviao> findAll() {
         return super.findAll();

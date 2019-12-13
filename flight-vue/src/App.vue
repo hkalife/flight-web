@@ -1,22 +1,28 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    
+    <HelloWorld />
+    <!--<Aviao />-->
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
+//import Aviao from './components/Aviao.vue'
 
 export default {
   name: 'app',
   components: {
     HelloWorld
+    //Aviao
   }
 }
 </script>
 
 <style>
+body {
+  background-color: #026F58;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

@@ -8,6 +8,20 @@ export default class AviaoApi {
     //CREATE
   
     //READ
+
+    async buscarGeral () {
+        return new Promise( resolve => {
+            fetch("http://localhost:8080/flight-backend/webresources/aviao/findAll", {
+                "method": "GET"
+            })
+            .then( j => j.json() )
+            .then( a => {
+                var aviao = [new Aviao(a)]
+                resolve(aviao)
+            })
+          })
+    }
+
     async buscar( id ) {
       let urlAviao = `${ this.url }/find/${ id }`
       
@@ -22,6 +36,8 @@ export default class AviaoApi {
         })
       })
     }
+
+    
 
     //UPDATE
 
